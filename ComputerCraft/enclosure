@@ -1,0 +1,20 @@
+
+local size = 15
+local limit = 15
+
+turtle.up()
+for w = 1, 4 do
+ turtle.select( w)
+ 
+ for t = 1, limit do
+  turtle.placeDown()
+  
+  if t < limit then
+   turtle.forward()
+  end
+ end
+ 
+ turtle.turnLeft()
+end
+
+-- The End.

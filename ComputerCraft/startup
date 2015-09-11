@@ -1,0 +1,14 @@
+
+
+local startups = {
+ "goPatch",
+ "depthPatch",
+ }
+ 
+for n,s in pairs( startups) do
+ print( n .. "> " .. s)
+ shell.run( s)
+ print( " ")
+end
+
+-- The End.

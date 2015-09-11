@@ -1,0 +1,70 @@
+-- Turtle Maximum Depth Patch
+-- -tricks turtle into thinking
+-- it hit bedrock at preset depth 
+
+-- Check for Patch
+if turtle.depthPatch then
+ print( "Depth Patch V" .. turtle.depthPatch .. " Found!")
+ print( "Reset Turtle before installing patch.")
+ return
+end
+
+-- Clean Patch Install
+turtle.depthPatch = 1.01
+print( "Installing Depth Patch V" .. turtle.depthPatch)
+
+-- Maximum Depth
+turtle.maxDepth = 512
+turtle.theDepth = 0
+
+-- Original Depth Functions
+turtle.oldDown = turtle.down
+turtle.oldUp = turtle.up
+turtle.oldDigDown = turtle.digDown
+turtle.oldDetectDown = turtle.detectDown
+
+-- Patched Functions
+turtle.down = function( ...)
+ if turtle.theDepth < turtle.maxDepth then
+  if turtle.oldDown( ...) then
+   turtle.theDepth = turtle.theDepth + 1
+   return true
+  end
+ end
+ 
+ return false
+end
+
+turtle.up = function( ...)
+ if turtle.oldUp( ...) then
+  turtle.theDepth = turtle.theDepth - 1
+  return true
+ end
+ 
+ return false
+end
+
+turtle.digDown = function( ...)
+ if turtle.theDepth < turtle.maxDepth then
+  return turtle.oldDigDown( ...)
+ end
+ 
+ -- Can not dig what's there
+ --  Indestructable
+ return false
+end
+
+turtle.detectDown = function( ...)
+ if turtle.theDepth < turtle.maxDepth then
+  return turtle.oldDetectDown( ...)
+ end
+ 
+ -- Once depth is reached...
+ --  Hit Indestructable Brick Floor
+ return true
+end
+
+print( "maxDepth: " .. turtle.maxDepth)
+print( "theDepth: " .. turtle.theDepth)
+
+-- The End.

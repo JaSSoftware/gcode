@@ -1,0 +1,11 @@
+-- Turtle GO Patch
+
+turtle.goPatch = 1.01
+print( "Installing Go Patch v" .. turtle.goPatch)
+
+-- Use GO feature with command string
+turtle.go = function( theStr)
+ shell.run( "go " .. theStr)
+end
+
+-- The End.
